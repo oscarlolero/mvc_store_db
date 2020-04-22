@@ -43,7 +43,7 @@ class Model:
         except connector.Error as err:
             return err
             
-    def read_all_product(self, product_id):
+    def read_all_products(self, product_id):
         try:
             sql = 'SELECT * FROM products'
             self.cursor.execute(sql)
