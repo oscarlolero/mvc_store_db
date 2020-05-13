@@ -1,4 +1,4 @@
-user:root
+user:admin
 password:6932124
 host:localhost
-database:store
+database:store_db

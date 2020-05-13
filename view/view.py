@@ -13,51 +13,91 @@ class View:
         print('==========================')
         print('Menu principal')
         print('==========================')
-        print('1. Clientes')
-        print('2. Ordenes')
-        print('3. Productos')
-        print('4. Salir')
+        print('1. CPs')
+        print('2. Productos')
+        print('3. Clientes')
+        print('4. Ordenes')
+        print('5. Salir')
     
     def option(self, last):
-        print('Selecciona una opcion (1-)'+last+'):', end = '')
+        print('Selecciona una opcion (1-'+last+'):', end = '')
 
     def not_valid_option(self):
         print('Opcion no valida', end = '')
     
     def ask(self, output):
-        print(output)
+        print(output, end='')
 
     def msg(self, output):
         print(output)
 
     def ok(self, id, op):
-        print('============================')
-        print('+ '+id+ 'se' + op + 'correctamente.')
-        print('============================')
+        print('+'*(len(str(id)+len(op)+24)))
+        print('+ ¡'+str(id)+' se '+op+' Correctamente! +')       
+        print('+'*(len(str(id)+len(op)+24)))
     
     def error(self, err):
         print('============================')
-        print('ERROR: '+ err)
-        print('============================')
+        print('¡ERROR! '.center(len(err)+4,'-'))
+        print('- '+err+' -')
+        print('-'*(len(err)+4))
 
-    "Products views"
+    "Zips views"
 
+    def zips_menu(self):
+        print('============================\nSubmenu CPs\n============================')
+        print('1. Agregar CP')
+        print('2. Mostrar CP')
+        print('3. Mostrar todos los CPs')
+        print('4. Mostrar CPs de uan ciudad')
+        print('5. Actualizar CP')
+        print('7 Borrar Cp')
+        print('6. Regresar')
+    
+    def show_a_zip(self, record):
+        print(f'{record[0]:<6}|{record[1]:<35}|{record[2]:<35}')
+
+    def show_zip_header(self, header):
+        print(header.center(78,'+'))
+        print('CP'.ljust(6)+'|'+'Ciudad'.ljust(35)+'|'+'Estado'.ljust(35))
+        print('-'*78)
+    
+    def show_zip_midder(self):
+        print('-'*78)
+
+    def show_zip_footer(self):
+        print('-'*78)
+
+    
+    "Products View"
+    
     def products_menu(self):
-        print('============================\nSubmenu productos\n============================')
+        print('============================\nSubmenu Productos\n============================')
         print('1. Agregar producto')
         print('2. Leer producto')
         print('3. Leer todos los productos')
-        print('4. Actualizar producto')
-        print('5. Borrar producto')
-        print('6. Regresar')
+        print('4. Leer productos de una marca')
+        print('5. Leer productos de un rango de precio')
+        print('6. Actualizar producto')
+        print('7. Borrar producto')
+        print('8. Regresar')
 
-    def show_product(self, record):
-        print('ID: ', record[0])
-        print('Nombre: ', record[1])
-        print('Marca: ', record[2])
-        print('Descripcion: ', record[3])
-        print('Precio: ', record[4])
-        print('============================')
+    def show_a_product(self, record):
+        print('ID:', record[0])
+        print('Nombre:', record[1])
+        print('Marca:', record[2])
+        print('Descripcion:', record[3])
+        print('Precio:', record[4])
+
+    def show_product_header(self, header):
+        print('-'*48)
+
+    def show_product_midder(self):
+        print('-'*48)  
+
+    def show_product_footer(self):
+        print('-'*48)     
+
 
     "Clients views"
 
@@ -66,17 +106,29 @@ class View:
         print('1. Agregar cliente')
         print('2. Leer cliente')
         print('3. Leer todos los cliente')
-        print('4. Actualizar cliente')
-        print('5. Borrar cliente')
-        print('6. Regresar')
+        print('4. Leer clientes de un SP')
+        print('5. Actualizar cliente')
+        print('6. Borrar cliente')
+        print('7. Regresar')
 
-    def show_client(self, record):
+    def show_a_client(self, record):
         print('ID: ', record[0])
-        print('Usuario: ', record[1])
-        print('Email: ', record[3])
-        print('Telefono: ', record[4])
-        print('Direccion: ', record[5])
+        print('Nombre: ', record[1]+' '+record[2]+' '+record[3])
+        print('Direccion: ', record[4]+' '+record[5])+' '+record[6]+' '+record[7]
+        print(record[11]+' '+record[12]+' '+record[8])
+        print('Email: ', record[9])
+        print('Telefono:', record[10])
         print('============================')
+
+    def show_client_header(self, header):
+        print(header.center(53,'+'))
+        print('+'*53)
+
+    def show_client_midder(self):
+         print('+'*53)
+
+    def show_client_footer(self):
+         print('+'*53)
 
     "Orders views"
 
@@ -96,16 +148,33 @@ class View:
 
     def show_order(self, record):
         print('ID: ', record[0])
-        print('Estado: ', record[3])
-        print('Fecha: ', record[4])
-        print('Total: ', record[2])
-        print('Datos cliente: ')
-        self.show_client(record[5:])
-        print('============================')
+        print('Estado: ', record[2])
+        print('Fecha: ', record[3])
+        print('Datos del cliente'.center(81,'*'))
+        "self.show_a_client_brief(record[5:])"
+
+
+    def show_order_header(self, header):
+        print(header.center(81,'+'))
+
+    def show_order_midder(self):
+        print('+'*81)
+    
+    def show_order_total(self, record):
+        print('Total de la orden'+str(record[4]))
+    
+    def show_order_footer(self):
+        print('+'*81)
 
     "View order details"
 
-    def show_order_details(self, record):
-        print(record[0]+'\t'+record[1]+'\t'+record[2]+'\t'+record[3]+'\t')
+    def show_a_order_details(self, record):
+        print(f'{record[0]:<5}|{record[1]:<20}|{record[2]:<20}|{record[3]:<1}|{record[4]:<9}|{record[5]:<11}')
+    
     def show_order_details_header(self):
-        print('ID\tProducto\tMarca')
+        print('+'*81)
+        print('ID'.ljust(5)+'|'+'Producto'.ljust(20)+'|'+'Marca'.ljust(20)+'|'+'Precio'.ljust(11)+'|'+'Cantidad'.ljust(9)+'|'+'Total'.ljust(11))
+        print('+'*81)
+    
+    def show_order_detail_footer(self):
+        print('+'*81)
