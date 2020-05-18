@@ -1,71 +1,75 @@
-CREATE DATABASE IF NOT EXISTS store_db;
-USE store_db;
+CREATE DATABASE  IF NOT exists store_db;
 
-CREATE TABLE IF NOT EXISTS zips(
-	zip VARCHAR(6) NOT NULL,
-    z_city VARCHAR(35) NOT NULL,
-    z_state VARCHAR(35) NOT NULL,
-    PRIMARY KEY (zip)
-)ENGINE = INNODB;
+use store_db;
 
-CREATE TABLE IF NOT EXISTS clients(
-	id_client INT NOT NULL AUTO_INCREMENT,
-    c_fname VARCHAR(35) NOT NULL,
-	c_sname1 VARCHAR(35) NOT NULL,
-    c_sname2 VARCHAR(35),
-    c_street VARCHAR(35) NOT NULL,
-    c_noext VARCHAR(7) NOT NULL,
-    c_noint VARCHAR(7),
-    c_col VARCHAR(50),
-    c_zip VARCHAR(6),
-    c_email VARCHAR(20),
-    c_phone VARCHAR(13),
-    PRIMARY KEY (id_client),
-    CONSTRAINT fkzip_clients FOREIGN KEY(c_zip) 
-    REFERENCES zips(zip) 
-    ON DELETE SET NULL
-    ON UPDATE CASCADE
-)ENGINE = INNODB;
+create table if not exists zips(
+	zip varchar(6) not null,
+    z_city varchar(35) not null,
+    z_state varchar(35) not null,
+    primary key(zip)
+)engine = InnoDB;
 
-CREATE TABLE IF NOT EXISTS products(
-    id_product INT NOT NULL AUTO_INCREMENT,
-    p_name VARCHAR(35) NOT NULL,
-    p_brand VARCHAR(35) NOT NULL,
-    p_descrip VARCHAR(250),
-    p_price FLOAT NOT NULL,
-    PRIMARY KEY(id_product)
-)ENGINE=INNODB;
+create table if not exists clients(
+	id_client int not null auto_increment,
+    c_fname varchar(35) not null,
+    c_sname1 varchar(35) not null,
+    c_sname2 varchar(35),
+    c_street varchar(35) not null,
+    c_noext varchar(7) not null,
+    c_noint varchar(7),
+    c_col varchar(35),
+    c_zip varchar(6),
+    c_email varchar (20),
+    c_phone varchar (13),
+    
+    primary key(id_client),
+    
+    constraint fkzip_clients foreign key (c_zip)
+		references zips (zip)
+        on delete set null
+        on update cascade
+)engine = InnoDB;
 
+create table if not exists product(
+	id_product int not null auto_increment,
+    p_name varchar(35) not null,
+    p_brand varchar(35) not null,
+    p_descrip varchar(250),
+    p_price float not null,
+    
+    primary key (id_product)
+)engine = InnoDB;
 
-CREATE TABLE IF NOT EXISTS orders(
-	id_order INT NOT NULL AUTO_INCREMENT,
-    id_client INT,
-	o_status ENUM ('PROSESSING','ACEPTD','SENT','RECEIVED') NOT NULL,
-    o_date DATE NOT NULL, 
-    o_total FLOAT NOT NULL,
-	PRIMARY KEY(id_order),
-    CONSTRAINT fkclient_orders
-    FOREIGN KEY (id_client)
-    REFERENCES clients(id_client)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE
-)ENGINE=INNODB;
+create table if not exists orders(
+	id_order int not null auto_increment,
+    id_client int,
+    o_status enum('processing','acept','sent','received') not null,
+    o_date date not null,
+    o_total float not null,
+    
+    primary key (id_order),
+    
+    constraint fkclient_orders foreign key (id_client)
+		references clients (id_client)
+        on delete cascade
+        on update cascade
+)engine = InnoDB;
 
-CREATE TABLE IF NOT EXISTS order_details(
-	id_order INT NOT NULL,
-    id_product INT NOT NULL,
-    od_amount INT NOT NULL,
-    od_total DATE NOT NULL,
-    PRIMARY KEY(id_order, id_product),
-    CONSTRAINT fkorder_ods
-    FOREIGN KEY (id_order)
-    REFERENCES orders(id_order)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE,
-    CONSTRAINT fkproduct_ods
-    FOREIGN KEY (id_product)
-    REFERENCES products(id_product)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE
-)ENGINE=INNODB;
-
+create table if not exists order_details(
+	id_order int not null,
+    id_product int not null,
+    od_amount int not null,
+    od_total float not null,
+    
+    primary key (id_order, id_product),
+    
+    constraint fkorder_ods foreign key (id_order)
+		references orders(id_order)
+        on delete cascade
+        on update cascade,
+        
+	constraint fkproduct_ods foreign key (id_product)
+		references product(id_product)
+        on delete cascade
+        on update cascade
+)engine = InnoDB;
